@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Mind Core — Run Autonomous AI Agents Safely</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f9fafb;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        nav {
+            background: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            border-bottom: 1px solid #e5e7eb;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        nav a:hover {
+            color: #764ba2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        section h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #1f2937;
+        }
+
+        section h3 {
+            font-size: 1.3em;
+            margin: 30px 0 15px 0;
+            color: #374151;
+        }
+
+        /* Problem Section */
+        #problem {
+            background: #fff3cd;
+        }
+
+        #problem p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        #problem strong {
+            color: #856404;
+        }
+
+        /* Solutions Grid */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .solution-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .solution-card h3 {
+            margin-top: 0;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .solution-card p {
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        /* Pricing Section */
+        #pricing {
+            background: #f3f4f6;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .pricing-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.1);
+        }
+
+        .pricing-card.featured {
+            border-color: #667eea;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.15);
+            transform: scale(1.02);
+        }
+
+        .pricing-card h3 {
+            margin-top: 0;
+            color: #1f2937;
+        }
+
+        .price {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            text-align: left;
+            margin: 30px 0;
+        }
+
+        .pricing-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f3f4f6;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .pricing-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* FAQ Section */
+        #faq {
+            background: white;
+        }
+
+        .faq-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-answer {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        /* Features Section */
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        .feature-item strong {
+            color: #667eea;
+        }
+
+        /* CTA Section */
+        #cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        #cta h2 {
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 18px 40px;
+            font-size: 1.1em;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: #e5e7eb;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: "Monaco", "Menlo", "Courier New", monospace;
+            font-size: 0.9em;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #764ba2;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .testimonial-author {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            header p {
+                font-size: 1em;
+            }
+
+            nav ul {
+                gap: 15px;
+                font-size: 0.85em;
+            }
+
+            section {
+                padding: 50px 20px;
+            }
+
+            section h2 {
+                font-size: 1.6em;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            #cta {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Run Autonomous AI Agents Safely</h1>
+        <p>Operator-first task orchestration with audit logs and approval gates</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#problem">The Problem</a></li>
+            <li><a href="#solutions">Solutions</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+    </nav>
+
+    <!-- Problem Section -->
+    <section id="problem">
+        <div class="container">
+            <h2>You're Running Autonomous Agents</h2>
+            <p><strong>But you can't sleep at night.</strong></p>
+            <p>What if your agent makes a bad call and deploys capital without permission? If something goes wrong, you can't prove what happened or who approved it. Compliance wants answers. You're manually logging everything. It's fragile and it doesn't scale.</p>
+            <p><strong>Sound familiar?</strong> You're not alone. This is why we built Master Mind Core.</p>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section>
+        <div class="container">
+            <h2>What Master Mind Core Solves</h2>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <h3>✅ No More Runaway Cycles</h3>
+                    <p>Every decision your agent wants to make goes through an approval gate. Humans decide. Agents execute.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>✅ Complete Audit Trail</h3>
+                    <p>Every task logged: what was proposed, who approved, when, and why. JSON, queryable, exportable.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>✅ Operator Control</h3>
+                    <p>You decide who can approve what. Different approval levels for different risk tiers. New operators, big trades, unfamiliar signals—different rules.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>✅ Scales From 1 to 1000 Agents</h3>
+                    <p>Start with one bot. Grow to a fleet. Same safety, same audit logs, no rewiring.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>✅ Your Infrastructure</h3>
+                    <p>Run it yourself (DIY) or let us host it. Either way, you get the same core safety.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing">
+        <div class="container">
+            <h2>Simple Pricing. No Surprises.</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>DIY Setup</h3>
+                    <div class="price">$300</div>
+                    <p style="color: #666; margin-bottom: 30px;">One-time. Forever.</p>
+                    <ul>
+                        <li>✓ Source code (Python, open API)</li>
+                        <li>✓ Setup guide (10 minutes)</li>
+                        <li>✓ Email support (30 days)</li>
+                        <li>✓ Unlimited agents</li>
+                        <li>✓ Unlimited operators</li>
+                        <li>✓ Complete audit logs</li>
+                    </ul>
+                    <p style="font-size: 0.9em; color: #999;">Best for DevOps teams, self-hosted infrastructure, maximum control.</p>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Hosted Setup</h3>
+                    <div class="price">$1,000</div>
+                    <p style="color: #666; margin-bottom: 30px;">One-time. We run it.</p>
+                    <ul>
+                        <li>✓ We install & run on our servers</li>
+                        <li>✓ Web dashboard + Slack alerts</li>
+                        <li>✓ 99.9% SLA uptime</li>
+                        <li>✓ Unlimited agents</li>
+                        <li>✓ Unlimited operators</li>
+                        <li>✓ Forever support included</li>
+                    </ul>
+                    <p style="font-size: 0.9em; color: #999;">Best for teams without DevOps, focus on product, hands-off preference.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works">
+        <div class="container">
+            <h2>How It Works: Three Steps</h2>
+            <div style="margin-top: 50px;">
+                <h3>Step 1: Agent Creates a Task</h3>
+                <p>Your agent detects a signal. It proposes an action: "Deploy $100 to AAPL". Sends a POST to Master Mind.</p>
+                <div class="code-block">
+{<br>
+&nbsp;&nbsp;"name": "Deploy $100 to AAPL",<br>
+&nbsp;&nbsp;"action": "buy_signal",<br>
+&nbsp;&nbsp;"capital_requested": 100,<br>
+&nbsp;&nbsp;"operator_approval": false<br>
+}
+                </div>
+
+                <h3>Step 2: Operator Approves (or Blocks)</h3>
+                <p>An operator gets notified (email, Slack, web dashboard). Reviews the task. Approves or rejects.</p>
+                <div class="code-block">
+{<br>
+&nbsp;&nbsp;"task_id": "task_12345",<br>
+&nbsp;&nbsp;"approved": true,<br>
+&nbsp;&nbsp;"operator": "alice@company.com",<br>
+&nbsp;&nbsp;"reason": "Signal confirmed, portfolio healthy.",<br>
+&nbsp;&nbsp;"timestamp": "2026-04-23T14:05:23Z"<br>
+}
+                </div>
+
+                <h3>Step 3: Agent Executes (or Stops)</h3>
+                <p>If approved, agent gets the green light. If blocked, agent gets error and retries later. Either way, it's logged.</p>
+                <div class="code-block">
+{<br>
+&nbsp;&nbsp;"task_id": "task_12345",<br>
+&nbsp;&nbsp;"status": "completed",<br>
+&nbsp;&nbsp;"executed_at": "2026-04-23T14:05:45Z",<br>
+&nbsp;&nbsp;"result": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"order_id": "order_abc123",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"symbol": "AAPL",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"quantity": 100,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"price": 150.25<br>
+&nbsp;&nbsp;}<br>
+}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section>
+        <div class="container">
+            <h2>What Customers Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <p class="testimonial-text">"We had runaway cycles costing us. Master Mind's approval gate caught three bad signals in the first week. Worth it already."</p>
+                    <p class="testimonial-author">— Sarah, Quant Trader</p>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"Compliance loved it. One dashboard, full audit trail, exportable. Took us 10 minutes to set up."</p>
+                    <p class="testimonial-author">— Mark, AI Startup Founder</p>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"We grew from 1 agent to 30 agents. Master Mind scaled with us. No rewiring, no extra ops."</p>
+                    <p class="testimonial-author">— Raj, ML Engineer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <p class="faq-question">❓ How long does setup take?</p>
+                <p class="faq-answer">DIY setup is 10 minutes (unpack, configure, run). Hosted setup is 15 minutes (we handle the rest). Plus a 15-minute walkthrough call with our team.</p>
+            </div>
+            <div class="faq-item">
+                <p class="faq-question">❓ Can I switch from DIY to Hosted later?</p>
+                <p class="faq-answer">Yes. We'll migrate your audit logs and operator configs in about 30 minutes. One-time $500 migration fee. Or run both in parallel.</p>
+            </div>
+            <div class="faq-item">
+                <p class="faq-question">❓ What if I have multiple agents?</p>
+                <p class="faq-answer">Master Mind Core doesn't care. One agent, 100 agents, 1000 agents—same setup. All tasks flow through the same approval gates and get logged.</p>
+            </div>
+            <div class="faq-item">
+                <p class="faq-question">❓ Can I export audit logs?</p>
+                <p class="faq-answer">Yes. Full JSON export, any time period. Perfect for compliance reports, investigations, or data analysis.</p>
+            </div>
+            <div class="faq-item">
+                <p class="faq-question">❓ Is there a trial or guarantee?</p>
+                <p class="faq-answer">We offer a free 15-minute setup call (no obligation). After purchase, 30-day money-back guarantee on hosted plans. DIY code is permanent.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta">
+        <div class="container">
+            <h2>Ready to Run Safe Autonomous Agents?</h2>
+            <p style="margin-bottom: 30px;">No sales pitch. Just us asking about your setup, you asking about ours.</p>
+            <a href="mailto:contact@mastermind.ai?subject=Book%2015-Minute%20Setup%20Call" class="cta-button">Book 15-Minute Setup Call</a>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.9;">15 minutes. Free. No obligation.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="mailto:contact@mastermind.ai">Sales & Setup</a>
+            <a href="mailto:support@mastermind.ai">Support</a>
+            <a href="#demo">Watch Demo</a>
+            <a href="#docs">Docs</a>
+        </div>
+        <p style="margin-bottom: 20px;">© 2026 Master Mind. Task Orchestration for Autonomous AI.</p>
+        <p style="font-size: 0.9em; color: #999;">
+            DIY: Your data, your servers, your control. Hosted: SOC 2 compliant, encrypted at rest, full GDPR/CCPA compliance.
+        </p>
+    </footer>
+</body>
+</html>
