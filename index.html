@@ -58,6 +58,14 @@
             flex-wrap: wrap;
         }
 
+        nav li:last-child a {
+            color: #667eea;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 4px;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
         nav a {
             text-decoration: none;
             color: #667eea;
@@ -349,6 +357,136 @@
             font-weight: 600;
         }
 
+        /* Contact Form Section */
+        #contact {
+            background: white;
+            padding: 80px 20px;
+        }
+
+        .contact-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .contact-method {
+            text-align: center;
+        }
+
+        .contact-method h3 {
+            font-size: 1.3em;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .contact-method p {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .contact-button {
+            background: #667eea;
+            color: white;
+            padding: 14px 28px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .contact-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .contact-button.secondary {
+            background: #e5e7eb;
+            color: #667eea;
+        }
+
+        .contact-button.secondary:hover {
+            background: #d1d5db;
+        }
+
+        /* Form Styles */
+        .contact-form {
+            background: #f9fafb;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            background: #667eea;
+            color: white;
+            padding: 14px 32px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .form-submit:hover {
+            background: #764ba2;
+        }
+
+        .form-note {
+            font-size: 0.85em;
+            color: #6b7280;
+            margin-top: 15px;
+            text-align: center;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             header h1 {
@@ -402,6 +540,7 @@
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#how-it-works">How It Works</a></li>
             <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Get Started</a></li>
         </ul>
     </nav>
 
@@ -591,8 +730,84 @@
         <div class="container">
             <h2>Ready to Run Safe Autonomous Agents?</h2>
             <p style="margin-bottom: 30px;">No sales pitch. Just us asking about your setup, you asking about ours.</p>
-            <a href="mailto:contact@mastermind.ai?subject=Book%2015-Minute%20Setup%20Call" class="cta-button">Book 15-Minute Setup Call</a>
+            <a href="#contact" class="cta-button">Book a Walkthrough</a>
             <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.9;">15 minutes. Free. No obligation.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="contact-wrapper">
+            <h2>Let's Talk About Your AI Safety</h2>
+            <p style="text-align: center; color: #555; margin-bottom: 40px;">
+                Pick your preferred way to connect. No pressure, no sales team.
+            </p>
+
+            <div class="contact-options">
+                <!-- Calendly Option -->
+                <div class="contact-method">
+                    <h3>📅 Self-Schedule</h3>
+                    <p>Pick a time that works. 15 minutes. Direct chat about your setup.</p>
+                    <a href="https://calendly.com/hishamalasker/15min" target="_blank" class="contact-button">Open Calendly</a>
+                    <p style="margin-top: 15px; font-size: 0.85em; color: #999;">Instant scheduling. No forms.</p>
+                </div>
+
+                <!-- Email Form Option -->
+                <div class="contact-method">
+                    <h3>✉️ Send a Message</h3>
+                    <p>Tell us about your setup. We'll reach out within 24 hours.</p>
+                    <button class="contact-button secondary" onclick="document.getElementById('form-section').scrollIntoView({behavior: 'smooth'});">
+                        Send Message
+                    </button>
+                    <p style="margin-top: 15px; font-size: 0.85em; color: #999;">Quick form. No spam.</p>
+                </div>
+            </div>
+
+            <!-- Contact Form (hidden by default, revealed on button click) -->
+            <div id="form-section" style="margin-top: 60px;">
+                <div class="contact-form">
+                    <h3 style="margin-top: 0; color: #1f2937;">Tell Us About Your Setup</h3>
+                    <p style="color: #555; font-size: 0.95em; margin-bottom: 30px;">
+                        We'll get back to you within 24 hours.
+                    </p>
+
+                    <form action="https://formspree.io/f/mbjenkgj" method="POST">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Alice Chen">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="alice@company.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company">Company / Project</label>
+                            <input type="text" id="company" name="company" placeholder="Acme AI Inc (optional)">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Tell Us About Your Setup</label>
+                            <textarea id="message" name="message" required placeholder="E.g., We're running 3 AI agents and need an approval system. We're currently on..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="timeline">When do you need this?</label>
+                            <select id="timeline" name="timeline" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-family: inherit;">
+                                <option value="">Select timeline...</option>
+                                <option value="This week">This week</option>
+                                <option value="This month">This month</option>
+                                <option value="Next quarter">Next quarter</option>
+                                <option value="Just exploring">Just exploring</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="form-submit">Send Message</button>
+                        <p class="form-note">We respect your privacy. No spam, no selling your data.</p>
+                    </form>
+                </div>
+            </div>
         </div>
     </section>
 
